@@ -1,0 +1,33 @@
+.menu-links {
+    padding-left: 40px;
+  }
+  .menu-link {
+    padding: 8px 12px;
+    font-size: 16px !important;
+    margin: 16px 10px;
+    font-weight: 400 !important;
+    line-height: 24px !important;
+  }
+  
+  .menu-link:hover {
+    background-color: rgb(104, 94, 94) !important;
+    border-radius: 6px !important;
+  }
+  .nav_link {
+    color: black;
+  }
+  
+  a {
+    text-decoration: none;
+    color: #fff;
+  }
+  .app_name {
+    font-weight: 600 !important;
+    font-size: 20px !important;
+    font-family: Poppins !important;
+    cursor: pointer;
+  }
+  .app_logo {
+    cursor: pointer;
+  }
+  
