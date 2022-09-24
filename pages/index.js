@@ -1,5 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Featured from '../components/Featured/Featured';
+import ProductList from '../components/ProductList/ProductList';
 import styles from "../styles/Home.module.css";
 
 
@@ -17,8 +19,10 @@ export default function Home() {
 <style data-href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200&display=swap" rel="stylesheet">
 
 </style>
-    
       </Head>
+      <Featured/>
+      <ProductList/>
+
     </div>
   )
 }
