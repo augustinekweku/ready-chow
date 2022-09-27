@@ -41,7 +41,7 @@ export const getServerSideProps = async (ctx) => {
   // }
 
   const res = await axios.get(
-    "http://localhost:3000/api/products"
+    "https://ready-chow.onrender.com/api/products"
   );
   console.log("res",res);
   return {
