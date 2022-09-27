@@ -1,9 +1,11 @@
-import { Grid, Typography } from "@mui/material";
+import { Checkbox, FormControlLabel, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import Image from "next/image";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { sm, tablet } from "../../responsive";
+
 const Container = styled.div``;
 
 const ImageContainer = styled.div`
@@ -13,16 +15,16 @@ const ImageContainer = styled.div`
 const ProductImage = styled.img``;
 const ProductTitle = styled.h3`
   font-size: 35px;
-  font-weight: 400;
+  font-weight: 500;
 `;
-const ProductPrice = styled.h4`
+const ProductPrice = styled.span`
   font-size: 30px;
   font-weight: 400;
   color: #d1411e;
-  text-decoration: underline;
+  border-bottom: 1px solid #d1411e;
 `;
 const ProductDesc = styled.p`
-  margin-bottom: 25px;
+  margin: 15px 0 25px 0;
 `;
 
 const Sizes = styled.div`
@@ -63,6 +65,47 @@ const SizeImage = styled.img`
   height: 100%;
   width: 100%;
 `;
+const Ingredients = styled.div`
+  display: flex;
+  margin-bottom: 30px;
+  ${sm({ flexDirection: "column" })}
+  ${tablet({ flexDirection: "row" })}
+`;
+
+const Option = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: 500;
+`;
+
+const InputCheckbox = styled.input`
+  width: 20px;
+  height: 20px;
+  accent-color: #d1411e;
+  margin-right: 5px;
+`;
+
+const AddBtnRow = styled.div``;
+
+const Quantity = styled.input`
+  height: 50px;
+  padding: 10px 20px;
+`;
+
+const Button = styled.button`
+  height: 30px;
+  margin-left: 10px;
+  background-color: #d1411e;
+  color: white;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 7px;
+  height: 50px;
+  padding: 10px 20px;
+`;
 
 const Product = ({ product }) => {
   const [price, setPrice] = useState(product?.prices[0]);
@@ -97,8 +140,8 @@ const Product = ({ product }) => {
   };
   return (
     <Container>
-      <Grid container sx={{ padding: "40px 0" }}>
-        <Grid item xs={12} lg={6}>
+      <Grid container sx={{ padding: "40px 15px" }}>
+        <Grid item xs={12} md={6} lg={6}>
           <ImageContainer>
             <ProductImage
               src={product?.img}
@@ -109,10 +152,10 @@ const Product = ({ product }) => {
             />
           </ImageContainer>
         </Grid>
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={12} md={6} lg={6}>
           <div>
             <ProductTitle>{product?.title}</ProductTitle>
-            <ProductPrice>{price}</ProductPrice>
+            <ProductPrice>GH₵ {price}</ProductPrice>
             <ProductDesc>{product?.desc}</ProductDesc>
             <Typography variant="h6">Choose the size</Typography>
           </div>
@@ -130,6 +173,30 @@ const Product = ({ product }) => {
               <Number>Large</Number>
             </Size>
           </Sizes>
+          <Typography variant="h6" sx={{ marginBottom: "10px;" }}>
+            Choose additional ingredients
+          </Typography>
+          <Ingredients>
+            {product.extraOptions.map((option) => (
+              <Option key={option._id}>
+                <InputCheckbox
+                  type="checkbox"
+                  id={option.text}
+                  name={option.text}
+                  onChange={(e) => handleChange(e, option)}
+                />
+                <label htmlFor="double">{option.text}</label>
+              </Option>
+            ))}
+          </Ingredients>
+          <AddBtnRow>
+            <Quantity
+              type="number"
+              onChange={(e) => setQuantity(e.target.value)}
+              defaultValue={1}
+            />
+            <Button onClick={handleClick}>Add to Cart</Button>
+          </AddBtnRow>
         </Grid>
       </Grid>
     </Container>
