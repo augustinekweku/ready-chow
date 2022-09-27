@@ -1,6 +1,6 @@
 module.exports = {
   images: {
-    domains: ["res.cloudinary.com"],
+    domains: ["firebasestorage.googleapis.com"],
   },
   compiler: {
     // Enables the styled-components SWC transform

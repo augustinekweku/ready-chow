@@ -3,10 +3,13 @@ import Image from 'next/image'
 import Featured from '../components/Featured/Featured';
 import ProductList from '../components/ProductList/ProductList';
 import styles from "../styles/Home.module.css";
+import axios from "axios";
+import { Grid } from '@mui/material';
 
 
 
-export default function Home() {
+
+export default function Home({productList}) {
   return (
     
     <div className={styles.container}>
@@ -21,8 +24,29 @@ export default function Home() {
 </style>
       </Head>
       <Featured/>
-      <ProductList/>
+
+      <ProductList productList={productList}/>
+
 
     </div>
   )
 }
+
+
+export const getServerSideProps = async (ctx) => {
+  // const myCookie = ctx.req?.cookies || "";
+  // let admin = false;
+  // if (myCookie.token === process.env.TOKEN) {
+  //   admin = true;
+  // }
+
+  const res = await axios.get(
+    "http://localhost:3000/api/products"
+  );
+  console.log("res",res);
+  return {
+    props: {
+      productList: res.data,
+    },
+  };
+};

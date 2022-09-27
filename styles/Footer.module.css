@@ -14,7 +14,7 @@
   
   .item:last-child {
     flex: 2;
-    padding: 50px;
+    padding: 40px;
     justify-content: space-between;
   }
   
