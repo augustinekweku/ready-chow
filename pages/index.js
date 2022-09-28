@@ -5,6 +5,7 @@ import ProductList from '../components/ProductList/ProductList';
 import styles from "../styles/Home.module.css";
 import axios from "axios";
 import { Grid } from '@mui/material';
+import Product from "../models/Product"
 
 
 
@@ -40,13 +41,12 @@ export const getServerSideProps = async (ctx) => {
   //   admin = true;
   // }
 
-  const res = await axios.get(
-    "https://ready-chow.onrender.com/api/products"
-  );
-  console.log("res",res);
+  const productsQuery = await Product.find();
+  let products = JSON.stringify(productsQuery)
+  console.log("res",products);
   return {
     props: {
-      productList: res.data,
+      productList:  JSON.parse(products),
     },
   };
 };

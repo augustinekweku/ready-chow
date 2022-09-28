@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { sm, tablet } from "../../responsive";
-
+import Product from "../../models/Product";
 const Container = styled.div``;
 
 const ImageContainer = styled.div`
@@ -107,7 +107,7 @@ const Button = styled.button`
   padding: 10px 20px;
 `;
 
-const Product = ({ product }) => {
+const SingleProduct = ({ product }) => {
   const [price, setPrice] = useState(product?.prices[0]);
   const [size, setSize] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -204,14 +204,17 @@ const Product = ({ product }) => {
 };
 
 export const getServerSideProps = async ({ params }) => {
-  const res = await axios.get(
-    `https://ready-chow.onrender.com/api/products/${params.id}`
-  );
+  // const res = await axios.get(
+  //   `https://ready-chow.onrender.com/api/products/${params.id}`
+  // );
+  const productQuery = await Product.findById(params.id);
+  const product = JSON.stringify(productQuery);
+
   return {
     props: {
-      product: res.data,
+      product: JSON.parse(product),
     },
   };
 };
 
-export default Product;
+export default SingleProduct;
