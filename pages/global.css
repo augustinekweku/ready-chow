@@ -18,3 +18,11 @@ a {
   margin: 0;
   padding: 0;
 }
+.css-1mi0u77-MuiBadge-badge{
+  color: #d1411e;
+  background-color: white;
+}
+
+.d-none{
+  display: none !important;
+}

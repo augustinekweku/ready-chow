@@ -5,6 +5,7 @@ import { createTheme, responsiveFontSizes, ThemeProvider } from "@mui/material";
 
 import './global.css'
 const theme = createTheme({
+
   typography: {
     fontFamily: ['Assistant', 'sans-serif'].join(","),
     color: "#efefef",
@@ -14,10 +15,7 @@ const theme = createTheme({
       main: "#0EA5E9",
       // darker: "#22C55E",
     },
-    neutral: {
-      main: "#64748B",
-      contrastText: "#fff",
-    },
+
   },
   breakpoints: {
     values: {

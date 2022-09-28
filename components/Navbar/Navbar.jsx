@@ -12,10 +12,12 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
+import LocalMallIcon from "@mui/icons-material/LocalMall";
 import Image from "next/image";
 
 import styled from "styled-components";
-import { color } from "@mui/system";
+import { Badge } from "@mui/material";
+import { useSelector } from "react-redux";
 const OrderNowImgWrapper = styled.div`
   background: white;
   border-radius: 50%;
@@ -45,6 +47,7 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const quantity = useSelector((state) => state.cart.quantity);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -181,10 +184,17 @@ const ResponsiveAppBar = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <IconButton
+                onClick={handleOpenUserMenu}
+                sx={{ p: 0 }}
+                className="d-none"
+              >
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
+            <Badge badgeContent={quantity} sx={{ color: "white" }}>
+              <LocalMallIcon sx={{ color: "white" }} />
+            </Badge>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"

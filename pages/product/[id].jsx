@@ -4,13 +4,15 @@ import Image from "next/image";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { sm, tablet } from "../../responsive";
+import { desktop, desktopLarge, sm, tablet, xl } from "../../responsive";
 import Product from "../../models/Product";
+import { addProduct } from "../../redux/cartSlice";
 const Container = styled.div``;
 
 const ImageContainer = styled.div`
-  width: 60%;
+  ${sm({ width: "40%" })}
   margin: 0 auto;
+  padding-bottom: 40px;
 `;
 const ProductImage = styled.img``;
 const ProductTitle = styled.h3`
@@ -18,7 +20,7 @@ const ProductTitle = styled.h3`
   font-weight: 500;
 `;
 const ProductPrice = styled.span`
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 400;
   color: #d1411e;
   border-bottom: 1px solid #d1411e;
@@ -30,8 +32,11 @@ const ProductDesc = styled.p`
 const Sizes = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 40%;
-  padding-top: 10px;
+  ${sm({ width: "60%" })}
+  ${tablet({ width: "50%" })}
+  ${desktop({ width: "30%" })}
+  ${xl({ width: "20%" })}
+  padding: 10px;
 `;
 const Size = styled.div`
   width: 30px;
@@ -90,12 +95,11 @@ const InputCheckbox = styled.input`
 const AddBtnRow = styled.div``;
 
 const Quantity = styled.input`
-  height: 50px;
-  padding: 10px 20px;
+  height: 40px;
+  padding: 7px 20px;
 `;
 
 const Button = styled.button`
-  height: 30px;
   margin-left: 10px;
   background-color: #d1411e;
   color: white;
@@ -103,8 +107,8 @@ const Button = styled.button`
   font-weight: 500;
   cursor: pointer;
   border-radius: 7px;
-  height: 50px;
-  padding: 10px 20px;
+  height: 40px;
+  padding: 7px 20px;
 `;
 
 const SingleProduct = ({ product }) => {
@@ -155,7 +159,7 @@ const SingleProduct = ({ product }) => {
         <Grid item xs={12} md={6} lg={6}>
           <div>
             <ProductTitle>{product?.title}</ProductTitle>
-            <ProductPrice>GH₵ {price}</ProductPrice>
+            <ProductPrice>GH¢ {price}</ProductPrice>
             <ProductDesc>{product?.desc}</ProductDesc>
             <Typography variant="h6">Choose the size</Typography>
           </div>
