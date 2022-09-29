@@ -4,13 +4,21 @@ import Image from "next/image";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { desktop, desktopLarge, sm, tablet, xl } from "../../responsive";
+import {
+  desktop,
+  desktopLarge,
+  mobile,
+  sm,
+  tablet,
+  xl,
+} from "../../responsive";
 import Product from "../../models/Product";
 import { addProduct } from "../../redux/cartSlice";
 const Container = styled.div``;
 
 const ImageContainer = styled.div`
-  ${sm({ width: "40%" })}
+  width: 50%;
+  ${mobile({ width: "40%" })}
   margin: 0 auto;
   padding-bottom: 40px;
 `;
@@ -32,9 +40,10 @@ const ProductDesc = styled.p`
 const Sizes = styled.div`
   display: flex;
   justify-content: space-between;
-  ${sm({ width: "60%" })}
+  ${mobile({ width: "60%" })}
   ${tablet({ width: "50%" })}
-  ${desktop({ width: "30%" })}
+  ${desktop({ width: "40%" })}
+  ${desktopLarge({ width: "30%" })}
   ${xl({ width: "20%" })}
   padding: 10px;
 `;
@@ -73,14 +82,15 @@ const SizeImage = styled.img`
 const Ingredients = styled.div`
   display: flex;
   margin-bottom: 30px;
-  ${sm({ flexDirection: "column" })}
-  ${tablet({ flexDirection: "row" })}
+  ${mobile({ flexDirection: "column" })}
+  flex-direction: row;
 `;
 
 const Option = styled.div`
   display: flex;
   align-items: center;
   margin-right: 10px;
+  margin-bottom: 10px;
   font-size: 14px;
   font-weight: 500;
 `;

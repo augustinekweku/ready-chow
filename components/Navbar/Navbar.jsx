@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import Image from "next/image";
+import Link from "next/link";
 
 import styled from "styled-components";
 import { Badge } from "@mui/material";
@@ -123,22 +124,22 @@ const ResponsiveAppBar = () => {
           <FastfoodIcon
             sx={{ display: { xs: "flex", md: "none", color: "white" }, mr: 1 }}
           />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontWeight: 700,
-              color: "white",
-              textDecoration: "none",
-            }}
-          >
-            READY CHOW
-          </Typography>
+          <Link href="/" passHref>
+            <Typography
+              variant="h5"
+              noWrap
+              sx={{
+                mr: 2,
+                display: { xs: "flex", md: "none" },
+                flexGrow: 1,
+                fontWeight: 700,
+                color: "white",
+                textDecoration: "none",
+              }}
+            >
+              READY CHOW
+            </Typography>
+          </Link>
           <Box
             sx={{
               flexGrow: 1,
@@ -157,21 +158,21 @@ const ResponsiveAppBar = () => {
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: "white", display: "inline" }}
             >
-              <Typography
-                variant="h5"
-                noWrap
-                component="a"
-                href="/"
-                sx={{
-                  display: { xs: "none", md: "flex" },
-                  fontWeight: 700,
-                  letterSpacing: ".1rem",
-                  color: "inherit",
-                  textDecoration: "none",
-                }}
-              >
-                READY CHOW
-              </Typography>{" "}
+              <Link href="/" passHref>
+                <Typography
+                  variant="h5"
+                  noWrap
+                  sx={{
+                    display: { xs: "none", md: "flex" },
+                    fontWeight: 700,
+                    letterSpacing: ".1rem",
+                    color: "inherit",
+                    textDecoration: "none",
+                  }}
+                >
+                  READY CHOW
+                </Typography>
+              </Link>
             </Button>
 
             <Button
@@ -192,9 +193,14 @@ const ResponsiveAppBar = () => {
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
-            <Badge badgeContent={quantity} sx={{ color: "white" }}>
-              <LocalMallIcon sx={{ color: "white" }} />
-            </Badge>
+            <Link href="/cart" passHref>
+              <Badge
+                badgeContent={quantity}
+                sx={{ color: "white", cursor: "pointer" }}
+              >
+                <LocalMallIcon sx={{ color: "white" }} />
+              </Badge>
+            </Link>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
