@@ -1,14 +1,14 @@
 export const cartData = [
     {
         id: 1,
-        title: "Peanut Butter and sanwich with some cream",
+        title: "Peanut Butter and sandwich with some cream",
         extras: [
             "red sauce",
             "green chilli",
             "black sauce"
         ],
         price: 180,
-        quanity: 3,
+        quantity: 1,
         img: "https://www.freepnglogos.com/uploads/pizza-png/comment-faire-pizza-parfaite-maison-32.png"
 },
     {
@@ -20,15 +20,17 @@ export const cartData = [
             "black sauce"
         ],
         price: 300,
-        quanity: 1,
+        quantity: 2,
         img: "https://www.freepnglogos.com/uploads/pizza-png/comment-faire-pizza-parfaite-maison-32.png"
 },
     {
         id: 3,
         title: "Banku and okro soup with some chicken",
-
+        extras: [
+            "red sauce"
+        ],
         price: 500,
-        quanity: 1,
+        quantity: 2,
         img: "https://www.freepnglogos.com/uploads/pizza-png/comment-faire-pizza-parfaite-maison-32.png"
 },
 ]

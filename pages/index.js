@@ -10,7 +10,10 @@ import Product from "../models/Product"
 
 
 
+
 export default function Home({productList}) {
+
+  
   return (
     
     <div className={styles.container}>

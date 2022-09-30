@@ -149,6 +149,10 @@ const SingleProduct = ({ product }) => {
     }
   };
 
+  const handleQuantity = (quantity) => {
+    setQuantity(parseInt(quantity));
+  };
+
   const handleClick = () => {
     dispatch(addProduct({ ...product, extras, price, quantity }));
   };
@@ -206,7 +210,7 @@ const SingleProduct = ({ product }) => {
           <AddBtnRow>
             <Quantity
               type="number"
-              onChange={(e) => setQuantity(e.target.value)}
+              onChange={(e) => handleQuantity(e.target.value)}
               defaultValue={1}
             />
             <Button onClick={handleClick}>Add to Cart</Button>

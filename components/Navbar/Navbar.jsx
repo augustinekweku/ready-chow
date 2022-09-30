@@ -18,7 +18,10 @@ import Link from "next/link";
 
 import styled from "styled-components";
 import { Badge } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { loadCart } from "../../redux/cartSlice";
+import { useState, useEffect } from "react";
+
 const OrderNowImgWrapper = styled.div`
   background: white;
   border-radius: 50%;
@@ -49,6 +52,30 @@ const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const quantity = useSelector((state) => state.cart.quantity);
+
+  const [stateCartQty, setStateCartQty] = useState(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log("setStateCartQty running?", stateCartQty);
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("CartQty")) {
+        var CartQty = JSON.parse(localStorage.getItem("CartQty"));
+        if (CartQty) {
+          var CartQty = JSON.parse(localStorage.getItem("CartQty"));
+          var cartBody = JSON.parse(localStorage.getItem("readyChowCart"));
+          var cartTotal = JSON.parse(localStorage.getItem("cartTotal"));
+          const cartObj = {
+            quantity: CartQty,
+            cart: cartBody,
+            total: cartTotal,
+          };
+          dispatch(loadCart(cartObj));
+          setStateCartQty(CartQty);
+        }
+      }
+    }
+  }, []);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);

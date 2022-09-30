@@ -4,11 +4,25 @@ import { useEffect, useState } from "react";
 // import OrderDetail from "../components/OrderDetail";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { reset } from "../redux/cartSlice";
+import {
+  addProduct,
+  decreaseCart,
+  deleteProduct,
+  increaseCart,
+  reset,
+} from "../redux/cartSlice";
 import { Button, Grid, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
+import {
+  LeadingActions,
+  SwipeableList,
+  SwipeableListItem,
+  SwipeAction,
+  TrailingActions,
+} from "react-swipeable-list";
+import "react-swipeable-list/dist/styles.css";
 
 import styled from "styled-components";
 import { mobile } from "../responsive";
@@ -17,7 +31,7 @@ import { cartData } from "../dummyData";
 
 const CartContainer = styled.div``;
 const ProductCard = styled.div`
-  display: flex;
+  width: 100%;
   border: 1px solid lavender;
   border-radius: 7px;
   padding: 15px;
@@ -29,7 +43,9 @@ const ProductCard = styled.div`
 
 const ImageContainer = styled.div``;
 const ProductImage = styled.img`
-  width: 100%;
+  width: 90%;
+  ${mobile({ width: "95%" })}
+  margin: 0 auto;
 `;
 
 const ProductName = styled.div`
@@ -38,14 +54,19 @@ const ProductName = styled.div`
     font-weight: 500;
     margin-bottom: 10px;
     line-height: 1.1;
+    ${mobile({ fontSize: "16px", marginBottom: "5px" })}
   }
 `;
 const Extras = styled.div`
   & > span {
     font-size: 14px;
+    ${mobile({ fontSize: "13px" })}
   }
   & > span::after {
     content: ", ";
+  }
+  & > span:first-child::after {
+    content: ":" !important;
   }
   & > span:last-child::after {
     content: "." !important;
@@ -59,22 +80,33 @@ const ProductQuantity = styled.div`
 const QtyAction = styled.div`
   padding: 10px;
   border-radius: 50px;
-  height: 30px;
-  width: 30px;
+  ${mobile({ width: "25px", height: "25px" })}
+
   display: flex;
   align-items: center;
   justify-content: center;
   background: ${(props) => (props.plus ? "#d1411e" : "#efefef")};
   margin: 10px;
-  & > h6 {
-    font-size: 24px;
-    color: ${(props) => (props.plus ? "white" : "black")};
+  & > svg {
+    ${mobile({ fontSize: "14px" })}
+    font-size: 19px;
   }
 `;
-const Quantity = styled.div``;
-const Plus = styled.div``;
-const ActionBtn = styled.div``;
-const IconContainer = styled.div``;
+const Quantity = styled.div`
+  & > h5 {
+    font-size: 18px;
+    font-weight: 500;
+  }
+`;
+
+const SwipeToDeleteContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ff0000ef;
+  height: calc(100% - 16px);
+  border-radius: 7px;
+`;
 
 const Cart = () => {
   const [open, setOpen] = useState(false);
@@ -100,64 +132,176 @@ const Cart = () => {
     }
   };
   useEffect(() => {
-    setCartArray(cartData);
+    if (typeof window !== "undefined") {
+      var localCart = JSON.parse(localStorage.getItem("readyChowCart"));
+      console.log(localCart);
+      // 👉️ can use localStorage here
+      setCartArray(localCart);
+    }
   }, []);
+
+  const trailingActions = (product, i) => (
+    <TrailingActions>
+      <SwipeAction
+        destructive={true}
+        onClick={() => deleteFromCart(product, i)}
+      >
+        <SwipeToDeleteContainer>
+          <DeleteIcon sx={{ color: "white" }} fontSize="large" />
+        </SwipeToDeleteContainer>
+      </SwipeAction>
+    </TrailingActions>
+  );
+
+  const deleteFromCart = (product, i) => {
+    console.log(cart.products);
+    const arr1 = cart.products;
+
+    const newArr = arr1.filter((obj, objIndex) => objIndex !== i);
+    // setCartArray(newArr);
+    console.log(newArr);
+
+    let newCartObj = {
+      cart: newArr,
+      productPrice: parseFloat(product.price) * parseFloat(product.quantity),
+      productQty: product.quantity,
+    };
+    dispatch(deleteProduct(newCartObj));
+  };
+
+  const increaseCount = (product, i) => {
+    const newQty = parseInt(product.quantity) + 1;
+    console.log(newQty);
+    const arr1 = cartArray;
+    const newArr = arr1.map((obj, obj_id) => {
+      if (obj_id === i) {
+        return { ...obj, quantity: newQty };
+      }
+      return obj;
+    });
+    setCartArray(newArr);
+    let newTotal = 0;
+    for (let index = 0; index < newArr.length; index++) {
+      newTotal +=
+        parseInt(newArr[index].price) * parseInt(newArr[index].quantity);
+    }
+    // dispatch(increaseCart(newArr));
+    let newCartObj = {
+      cart: newArr,
+      total: newTotal,
+    };
+    dispatch(increaseCart(newCartObj));
+  };
+
+  const decreaseCount = (product, i) => {
+    console.log(product.quantity);
+    const newQty = parseInt(product.quantity) - 1;
+    const arr1 = cartArray;
+    const newArr = arr1.map((obj, obj_id) => {
+      if (obj_id === i) {
+        if (obj.quantity > 1) {
+          return { ...obj, quantity: newQty };
+        }
+      }
+      return obj;
+    });
+    if (product.quantity > 1) {
+      setCartArray(newArr);
+      let newTotal = 0;
+      for (let index = 0; index < newArr.length; index++) {
+        newTotal +=
+          parseInt(newArr[index].price) * parseInt(newArr[index].quantity);
+      }
+      // dispatch(increaseCart(newArr));
+      let newCartObj = {
+        cart: newArr,
+        total: newTotal,
+      };
+      dispatch(decreaseCart(newCartObj));
+    }
+  };
 
   return (
     <div>
       <Grid container>
-        <Grid item xs={9} sx={{ padding: "20px" }}>
-          <Typography variant="h4">
+        <Grid item xs={12} md={6} lg={5} sx={{ padding: "20px" }}>
+          <Typography variant="h4" sx={{ marginBottom: "20px" }}>
             <b>Cart</b>{" "}
           </Typography>
           <CartContainer>
-            {cartArray.map((product, i) => (
-              <ProductCard key={i}>
-                <Grid container sx={{ alignItems: "center" }} spacing={2}>
-                  <Grid item xs={3}>
-                    <ImageContainer>
-                      <ProductImage src={product?.img} />
-                    </ImageContainer>
-                  </Grid>
-                  <Grid item xs={5}>
-                    <ProductName>
-                      {" "}
-                      <h5>{product?.title}</h5>
-                    </ProductName>
-                    <Extras>
-                      {product.extras &&
-                        product?.extras.map((extra, i) => (
-                          <span key={i}>&nbsp;{extra}</span>
-                        ))}
-                    </Extras>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <ProductQuantity>
-                      <QtyAction>
-                        <RemoveIcon sx={{ color: "black" }} />
-                      </QtyAction>
-                      <Quantity>
-                        <h5>{product?.quantity}</h5>
-                      </Quantity>
-                      <QtyAction plus>
-                        <AddIcon sx={{ color: "white" }} />
-                      </QtyAction>
-                    </ProductQuantity>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={1}
-                    sx={{ display: "flex", justifyContent: "end" }}
-                  >
-                    <ActionBtn>
-                      <IconContainer>
-                        <DeleteIcon fontSize="large" />
-                      </IconContainer>
-                    </ActionBtn>
-                  </Grid>
-                </Grid>
-              </ProductCard>
-            ))}
+            {cartArray?.length > 0 ? (
+              <>
+                <SwipeableList>
+                  {cartArray?.map((product, i) => (
+                    <SwipeableListItem
+                      key={i}
+                      destructive={true}
+                      destructiveCallbackDelay={3000}
+                      trailingActions={trailingActions(product, i)}
+                    >
+                      <ProductCard key={i}>
+                        <Grid
+                          container
+                          sx={{ alignItems: "center" }}
+                          spacing={2}
+                        >
+                          <Grid item xs={3}>
+                            <ImageContainer>
+                              <ProductImage src={product?.img} />
+                            </ImageContainer>
+                          </Grid>
+                          <Grid item xs={5.5}>
+                            <ProductName>
+                              {" "}
+                              <h5>{product?.title}</h5>
+                            </ProductName>
+                            <Extras>
+                              {product?.extras && (
+                                <>
+                                  <span>
+                                    <b>Extras</b>{" "}
+                                  </span>
+                                </>
+                              )}
+                              {product?.extras &&
+                                product?.extras.map((extra, i) => (
+                                  <span key={i}>&nbsp;{extra.text}</span>
+                                ))}
+                            </Extras>
+                          </Grid>
+                          <Grid item xs={3.5}>
+                            <ProductQuantity>
+                              <QtyAction
+                                onClick={() => decreaseCount(product, i)}
+                              >
+                                <RemoveIcon sx={{ color: "black" }} />
+                              </QtyAction>
+                              <Quantity>
+                                <h5>{product?.quantity}</h5>
+                              </Quantity>
+                              <QtyAction
+                                plus
+                                onClick={() => increaseCount(product, i)}
+                              >
+                                <AddIcon sx={{ color: "white" }} />
+                              </QtyAction>
+                            </ProductQuantity>
+                          </Grid>
+                        </Grid>
+                      </ProductCard>
+                    </SwipeableListItem>
+                  ))}
+                </SwipeableList>
+              </>
+            ) : (
+              <>
+                <ProductCard>
+                  <h3 style={{ margin: "50px", textAlign: "center" }}>
+                    No Items in Cart
+                  </h3>
+                </ProductCard>
+              </>
+            )}
           </CartContainer>
         </Grid>
         <Grid item xs={3}></Grid>
