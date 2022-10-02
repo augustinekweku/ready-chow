@@ -222,7 +222,7 @@ const SingleProduct = ({ product }) => {
 
 export const getServerSideProps = async ({ params }) => {
   const res = await axios.get(
-    `http://localhost:3005/api/products/${params.id}`
+    `https://dull-gray-sparrow.cyclic.app/api/products/${params.id}`
   );
   const product = res.data;
 

@@ -44,7 +44,7 @@ export const getServerSideProps = async (ctx) => {
   //   admin = true;
   // }
   const res = await axios.get(
-    "http://localhost:3005/api/products"
+    "https://dull-gray-sparrow.cyclic.app/api/products"
   );  
 
   const products =  res.data

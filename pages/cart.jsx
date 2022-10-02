@@ -120,7 +120,7 @@ const Cart = () => {
   const createOrder = async (data) => {
     try {
       const res = await axios.post(
-        "https://next-restaurant-101.herokuapp.com/api/orders",
+        "https://dull-gray-sparrow.cyclic.app/api/orders",
         data
       );
       if (res.status === 201) {
