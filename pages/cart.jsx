@@ -46,6 +46,7 @@ const ProductImage = styled.img`
   width: 90%;
   ${mobile({ width: "95%" })}
   margin: 0 auto;
+  padding-left: 7px;
 `;
 
 const ProductName = styled.div`
@@ -245,12 +246,12 @@ const Cart = () => {
                           sx={{ alignItems: "center" }}
                           spacing={2}
                         >
-                          <Grid item xs={3}>
+                          <Grid item xs={2.5} lg={3}>
                             <ImageContainer>
                               <ProductImage src={product?.img} />
                             </ImageContainer>
                           </Grid>
-                          <Grid item xs={5.5}>
+                          <Grid item xs={5.5} lg={5.5}>
                             <ProductName>
                               {" "}
                               <h5>{product?.title}</h5>
@@ -269,7 +270,12 @@ const Cart = () => {
                                 ))}
                             </Extras>
                           </Grid>
-                          <Grid item xs={3.5}>
+                          <Grid
+                            item
+                            xs={4}
+                            lg={3.5}
+                            sx={{ justifyContent: "end" }}
+                          >
                             <ProductQuantity>
                               <QtyAction
                                 onClick={() => decreaseCount(product, i)}
