@@ -2,6 +2,7 @@ module.exports = {
   images: {
     domains: ["firebasestorage.googleapis.com"],
   },
+
   compiler: {
     // Enables the styled-components SWC transform
     styledComponents: true
