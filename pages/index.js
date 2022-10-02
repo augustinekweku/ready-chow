@@ -5,7 +5,7 @@ import ProductList from '../components/ProductList/ProductList';
 import styles from "../styles/Home.module.css";
 import axios from "axios";
 import { Grid } from '@mui/material';
-import Product from "../models/Product"
+import { pizzas } from '../dummyData';
 
 
 
@@ -43,13 +43,14 @@ export const getServerSideProps = async (ctx) => {
   // if (myCookie.token === process.env.TOKEN) {
   //   admin = true;
   // }
+  const res = await axios.get(
+    "http://localhost:3005/api/products"
+  );  
 
-  const productsQuery = await Product.find();
-  let products = JSON.stringify(productsQuery)
-  console.log("res",products);
+  const products =  res.data
   return {
     props: {
-      productList:  JSON.parse(products),
+      productList:  products,
     },
   };
 };

@@ -12,7 +12,6 @@ import {
   tablet,
   xl,
 } from "../../responsive";
-import Product from "../../models/Product";
 import { addProduct } from "../../redux/cartSlice";
 const Container = styled.div``;
 
@@ -222,15 +221,14 @@ const SingleProduct = ({ product }) => {
 };
 
 export const getServerSideProps = async ({ params }) => {
-  // const res = await axios.get(
-  //   `https://ready-chow.onrender.com/api/products/${params.id}`
-  // );
-  const productQuery = await Product.findById(params.id);
-  const product = JSON.stringify(productQuery);
+  const res = await axios.get(
+    `http://localhost:3005/api/products/${params.id}`
+  );
+  const product = res.data;
 
   return {
     props: {
-      product: JSON.parse(product),
+      product: product,
     },
   };
 };
