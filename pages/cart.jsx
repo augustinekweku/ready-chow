@@ -228,6 +228,7 @@ const Cart = () => {
       <Head>
         <title>Cart</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link rel="icon" href="/img/pizza2.png" />
       </Head>
       <Grid container>
         <Grid item xs={12} md={6} lg={5} sx={{ padding: "20px" }}>
