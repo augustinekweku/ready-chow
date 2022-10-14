@@ -226,9 +226,9 @@ const Cart = () => {
   return (
     <div>
       <Head>
-        <title>Cart</title>
+        <title>Check out Owusu&apos;s Profile </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="icon" href="/img/pizza2.png" />
+        <link rel="icon" href="/img/gob3.jpeg" />
       </Head>
       <Grid container>
         <Grid item xs={12} md={6} lg={5} sx={{ padding: "20px" }}>
