@@ -28,6 +28,7 @@ import styled from "styled-components";
 import { mobile } from "../responsive";
 
 import { cartData } from "../dummyData";
+import Head from "next/head";
 
 const CartContainer = styled.div``;
 const ProductCard = styled.div`
@@ -224,6 +225,10 @@ const Cart = () => {
 
   return (
     <div>
+      <Head>
+        <title>Cart</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <Grid container>
         <Grid item xs={12} md={6} lg={5} sx={{ padding: "20px" }}>
           <Typography variant="h4" sx={{ marginBottom: "20px" }}>
